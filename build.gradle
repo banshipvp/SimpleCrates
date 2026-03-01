@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+}
+
+group = 'local.simplecrates'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
+    maven { url = 'https://jitpack.io' }
+}
+
+dependencies {
+    compileOnly 'org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT'
+    compileOnly 'com.github.MilkBowl:VaultAPI:1.7.1'
+    compileOnly files('../SimpleKits/build/libs/SimpleKits-1.0.jar')
+    compileOnly files('../SimpleEconomy/build/libs/SimpleEconomy-1.0.jar')
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
