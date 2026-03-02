@@ -49,9 +49,27 @@ public class CrateManager {
         lore.add("§7Right-click to open this crate");
         lore.add("§7Left-click to preview rewards");
         lore.add("§7");
-        lore.add("§eTier: §f" + tier.getId());
-        lore.add("§aMoney Range: §e$" + format(tier.getMinMoney()) + " - $" + format(tier.getMaxMoney()));
-        lore.add("§7Higher tiers = better rewards");
+        lore.add("§eContains " + getRewardCount(tier) + " rewards:");
+        lore.add("§7");
+        
+        // Show reward types
+        lore.add("§6✦ Money: §e$" + format(tier.getMinMoney()) + " - $" + format(tier.getMaxMoney()));
+        lore.add("§6✦ Spawners:");
+        lore.addAll(getSpawnerTypesForLore(tier));
+        
+        if (tier == CrateTier.ELITE || tier == CrateTier.ULTIMATE || tier == CrateTier.LEGENDARY || tier == CrateTier.GODLY) {
+            lore.add("§6✦ GKit Gear");
+        }
+        if (tier == CrateTier.ELITE || tier == CrateTier.ULTIMATE || tier == CrateTier.LEGENDARY || tier == CrateTier.GODLY) {
+            lore.add("§6✦ GKit Gems");
+        }
+        if (tier == CrateTier.UNIQUE || tier == CrateTier.ELITE || tier == CrateTier.ULTIMATE || tier == CrateTier.LEGENDARY || tier == CrateTier.GODLY) {
+            lore.add("§6✦ Rank Vouchers");
+        }
+        if (tier == CrateTier.ELITE || tier == CrateTier.ULTIMATE || tier == CrateTier.LEGENDARY || tier == CrateTier.GODLY) {
+            lore.add("§6✦ Bonus Crates");
+        }
+        
         lore.add("§7");
         lore.add("§6✦ Single Use ✦");
         meta.setLore(lore);
@@ -60,6 +78,26 @@ public class CrateManager {
         meta.getPersistentDataContainer().set(crateKey, PersistentDataType.STRING, tier.getId());
         crate.setItemMeta(meta);
         return crate;
+    }
+
+    private int getRewardCount(CrateTier tier) {
+        return switch (tier) {
+            case SIMPLE -> 2;
+            case UNIQUE -> 2;
+            case ELITE -> 3;
+            case ULTIMATE -> 3;
+            case LEGENDARY -> 4;
+            case GODLY -> 5;
+        };
+    }
+
+    private List<String> getSpawnerTypesForLore(CrateTier tier) {
+        List<SpawnerChoice> pool = getSpawnerPoolByTier(tier);
+        List<String> lore = new ArrayList<>();
+        for (SpawnerChoice choice : pool) {
+            lore.add("    §f• " + pretty(choice.type().name()));
+        }
+        return lore;
     }
 
     public Inventory createPreviewInventory(CrateTier tier) {
@@ -169,46 +207,45 @@ public class CrateManager {
 
         switch (tier) {
             case SIMPLE -> {
-                list.add(weight(45, itemReward(simpleGear())));
+                list.add(weight(45, itemReward(createTieredGKitGear(tier), "§7GKit Gear")));
                 list.add(weight(30, itemReward(new ItemStack(Material.EXPERIENCE_BOTTLE, 16), "§bXP Bottles x16")));
                 list.add(weight(15, itemReward(createRankNote("scout", 1), "§aScout Rank Note")));
                 list.add(weight(10, itemReward(createRandomSpawnerByTier(CrateTier.SIMPLE), "§fRandom Simple Spawner")));
             }
             case UNIQUE -> {
-                list.add(weight(35, itemReward(midGear(Material.IRON_SWORD, Material.IRON_CHESTPLATE, "§a", "Unique"))));
+                list.add(weight(35, itemReward(createTieredGKitGear(tier), "§aGKit Gear")));
                 list.add(weight(35, itemReward(createRandomSpawnerByTier(CrateTier.UNIQUE), "§aRandom Unique Spawner")));
                 list.add(weight(15, itemReward(createRankVoucher("militant"), "§eMilitant Rank Voucher")));
                 list.add(weight(15, itemReward(createXPBottle(1500), "§bXP Bottle 1500")));
             }
             case ELITE -> {
-                list.add(weight(25, itemReward(midGear(Material.DIAMOND_SWORD, Material.DIAMOND_CHESTPLATE, "§e", "Elite"))));
+                list.add(weight(25, itemReward(createTieredGKitGear(tier), "§bGKit Gear")));
                 list.add(weight(20, itemReward(createRandomSpawnerByTier(CrateTier.ELITE), "§eRandom Elite Spawner")));
                 list.add(weight(20, itemReward(createGKitGem(), "§dGKit Gem")));
-                list.add(weight(15, itemReward(createRandomGKitGear(), "§dRandom GKit Gear")));
+                list.add(weight(15, itemReward(createTieredGKitGear(tier), "§dRandom GKit Gear")));
                 list.add(weight(15, itemReward(createRankVoucher("tactician"), "§6Tactician Voucher")));
                 list.add(weight(20, itemReward(createCrateItem(CrateTier.UNIQUE, 1), "§aUnique Crate")));
             }
             case ULTIMATE -> {
-                list.add(weight(25, itemReward(goodGear())));
+                list.add(weight(25, itemReward(createTieredGKitGear(tier), "§5GKit Gear")));
                 list.add(weight(20, itemReward(createRandomSpawnerByTier(CrateTier.ULTIMATE), "§5Random Ultimate Spawner")));
                 list.add(weight(20, itemReward(createGKitGem(), "§dGKit Gem")));
-                list.add(weight(18, itemReward(createRandomGKitGear(), "§dRandom GKit Gear")));
+                list.add(weight(18, itemReward(createTieredGKitGear(tier), "§dRandom GKit Gear")));
                 list.add(weight(20, itemReward(createRankVoucher("warlord"), "§5Warlord Voucher")));
                 list.add(weight(15, itemReward(createCrateItem(CrateTier.ELITE, 1), "§bElite Crate")));
             }
             case LEGENDARY -> {
-                list.add(weight(28, itemReward(greatGear())));
+                list.add(weight(28, itemReward(createTieredGKitGear(tier), "§6GKit Gear")));
                 list.add(weight(20, itemReward(createRandomSpawnerByTier(CrateTier.LEGENDARY), "§6Random Legendary Spawner")));
                 list.add(weight(17, itemReward(createGKitGem(), "§dGKit Gem")));
-                list.add(weight(20, itemReward(createRandomGKitGear(), "§dRandom GKit Gear")));
+                list.add(weight(20, itemReward(createTieredGKitGear(tier), "§dRandom GKit Gear")));
                 list.add(weight(15, itemReward(createRankVoucher("sovereign"), "§cSovereign Voucher")));
                 list.add(weight(20, itemReward(createCrateItem(CrateTier.ULTIMATE, 1), "§5Ultimate Crate")));
             }
             case GODLY -> {
-                list.add(weight(32, itemReward(godGear())));
                 list.add(weight(18, itemReward(createRandomSpawnerByTier(CrateTier.GODLY), "§dRandom Godly Spawner")));
-                list.add(weight(18, itemReward(createGKitGem(), "§dGKit Gem")));
-                list.add(weight(22, itemReward(createRandomGKitGear(), "§dRandom GKit Gear")));
+                list.add(weight(28, itemReward(createGKitGem(), "§dGKit Gem")));
+                list.add(weight(32, itemReward(createTieredGKitGear(CrateTier.LEGENDARY), "§dRandom GKit Gear")));
                 list.add(weight(12, itemReward(createRankVoucher("sovereign"), "§cSovereign Voucher")));
                 list.add(weight(20, itemReward(createCrateItem(CrateTier.LEGENDARY, 1), "§6Legendary Crate")));
             }
@@ -401,7 +438,7 @@ public class CrateManager {
         return fallback;
     }
 
-    private ItemStack createRandomGKitGear() {
+    private ItemStack createTieredGKitGear(CrateTier tier) {
         String kitName = "random";
         String kitDisplay = "§dRandom GKit";
 
@@ -430,7 +467,7 @@ public class CrateManager {
             item.setItemMeta(meta);
         }
 
-        applyBaseGearEnchants(item, material);
+        applyTieredGearEnchants(item, material, tier);
         List<Enchantment> bonus = applyRandomKitBonusEnchants(item, material, kitName);
 
         ItemMeta updatedMeta = item.getItemMeta();
@@ -448,24 +485,44 @@ public class CrateManager {
         return item;
     }
 
-    private void applyBaseGearEnchants(ItemStack item, Material material) {
+    private ItemStack createRandomGKitGear() {
+        return createTieredGKitGear(CrateTier.ELITE);
+    }
+
+    private void applyTieredGearEnchants(ItemStack item, Material material, CrateTier tier) {
+        int baseLevel, variance;
+        
+        switch (tier) {
+            case SIMPLE -> { baseLevel = 1; variance = 3; }
+            case UNIQUE -> { baseLevel = 2; variance = 3; }
+            case ELITE -> { baseLevel = 3; variance = 3; }
+            case ULTIMATE -> { baseLevel = 4; variance = 3; }
+            case LEGENDARY -> { baseLevel = 4; variance = 3; }
+            case GODLY -> { baseLevel = 5; variance = 2; }
+            default -> { baseLevel = 3; variance = 3; }
+        }
+
         if (material.name().contains("HELMET") || material.name().contains("CHESTPLATE") || material.name().contains("LEGGINGS") || material.name().contains("BOOTS")) {
-            item.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4 + random.nextInt(3));
+            item.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, baseLevel + random.nextInt(variance));
             item.addUnsafeEnchantment(Enchantment.DURABILITY, 3 + random.nextInt(2));
             return;
         }
 
         if (material == Material.DIAMOND_SWORD) {
-            item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 4 + random.nextInt(3));
+            item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, baseLevel + random.nextInt(variance));
             item.addUnsafeEnchantment(Enchantment.DURABILITY, 3 + random.nextInt(2));
             return;
         }
 
         if (material == Material.DIAMOND_PICKAXE) {
             item.addUnsafeEnchantment(Enchantment.DIG_SPEED, 5 + random.nextInt(2));
-            item.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 2 + random.nextInt(2));
+            item.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, baseLevel + random.nextInt(variance));
             item.addUnsafeEnchantment(Enchantment.DURABILITY, 3 + random.nextInt(2));
         }
+    }
+
+    private void applyBaseGearEnchants(ItemStack item, Material material) {
+        applyTieredGearEnchants(item, material, CrateTier.ELITE);
     }
 
     private List<Enchantment> applyRandomKitBonusEnchants(ItemStack item, Material material, String kitName) {
@@ -543,30 +600,14 @@ public class CrateManager {
     }
 
     private String randomLoreForEnchant(Enchantment enchantment) {
-        return switch (enchantment.getKey().getKey()) {
-            case "fire_aspect" -> pick("§dBlazing edge", "§dFlamekiss", "§dInferno touch");
-            case "knockback" -> pick("§dImpact burst", "§dForce pulse", "§dShockwave");
-            case "sweeping" -> pick("§dCleave arc", "§dWide slash", "§dCrowd breaker");
-            case "thorns" -> pick("§dReactive spikes", "§dBarbed guard", "§dPain mirror");
-            case "fire_protection" -> pick("§dHeat ward", "§dAsh shield", "§dInferno guard");
-            case "blast_protection" -> pick("§dBlast shell", "§dDetonation ward", "§dImpact guard");
-            case "projectile_protection" -> pick("§dArrow ward", "§dRanged guard", "§dVolley shield");
-            case "protection" -> pick("§dHardened weave", "§dGuardian layer", "§dAegis field");
-            case "respiration" -> pick("§dDeep breath", "§dAqua lungs", "§dOcean lungs");
-            case "aqua_affinity" -> pick("§dTidal focus", "§dWave focus", "§dAqua control");
-            case "swift_sneak" -> pick("§dShadow step", "§dSilent pace", "§dGhost stride");
-            case "feather_falling" -> pick("§dSoftfall", "§dSky cushion", "§dGravity dampen");
-            case "depth_strider" -> pick("§dTide runner", "§dWavewalk", "§dAqua stride");
-            case "frost_walker" -> pick("§dIce tread", "§dGlacial step", "§dFrost path");
-            case "soul_speed" -> pick("§dSoul rush", "§dSpirit stride", "§dNether sprint");
-            case "mending" -> pick("§dSelf repair", "§dReforged bond", "§dEverlasting edge");
-            case "silk_touch" -> pick("§dSilken harvest", "§dGentle hand", "§dPreserve touch");
-            default -> "§dEnchanted trait";
-        };
-    }
-
-    private String pick(String... values) {
-        return values[random.nextInt(values.length)];
+        String key = enchantment.getKey().getKey().replace("_", " ");
+        String[] words = key.split(" ");
+        StringBuilder name = new StringBuilder();
+        for (String word : words) {
+            if (name.length() > 0) name.append(" ");
+            if (!word.isEmpty()) name.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1));
+        }
+        return "§9" + name;
     }
 
     private ItemStack createSpawner(EntityType type) {
@@ -607,60 +648,37 @@ public class CrateManager {
     private List<SpawnerChoice> getSpawnerPoolByTier(CrateTier tier) {
         return switch (tier) {
             case SIMPLE -> List.of(
-                    new SpawnerChoice(EntityType.CHICKEN, 30),
-                    new SpawnerChoice(EntityType.COW, 25),
-                    new SpawnerChoice(EntityType.SHEEP, 20),
-                    new SpawnerChoice(EntityType.PIG, 15),
-                    new SpawnerChoice(EntityType.RABBIT, 10)
+                    new SpawnerChoice(EntityType.WOLF, 35),
+                    new SpawnerChoice(EntityType.CHICKEN, 35),
+                    new SpawnerChoice(EntityType.SHEEP, 30)
             );
             case UNIQUE -> List.of(
-                    new SpawnerChoice(EntityType.CHICKEN, 20),
-                    new SpawnerChoice(EntityType.COW, 20),
-                    new SpawnerChoice(EntityType.SHEEP, 18),
-                    new SpawnerChoice(EntityType.PIG, 12),
-                    new SpawnerChoice(EntityType.BLAZE, 12),
-                    new SpawnerChoice(EntityType.ENDERMAN, 10),
-                    new SpawnerChoice(EntityType.CREEPER, 8)
+                    new SpawnerChoice(EntityType.CAVE_SPIDER, 40),
+                    new SpawnerChoice(EntityType.PIG, 35),
+                    new SpawnerChoice(EntityType.COW, 25)
             );
             case ELITE -> List.of(
-                    new SpawnerChoice(EntityType.BLAZE, 20),
-                    new SpawnerChoice(EntityType.ENDERMAN, 20),
-                    new SpawnerChoice(EntityType.CREEPER, 15),
-                    new SpawnerChoice(EntityType.GHAST, 12),
-                    new SpawnerChoice(EntityType.GUARDIAN, 10),
-                    new SpawnerChoice(EntityType.MAGMA_CUBE, 10),
-                    new SpawnerChoice(EntityType.IRON_GOLEM, 8),
-                    new SpawnerChoice(EntityType.MUSHROOM_COW, 5)
+                    new SpawnerChoice(EntityType.SPIDER, 40),
+                    new SpawnerChoice(EntityType.ZOMBIE, 35),
+                    new SpawnerChoice(EntityType.SKELETON, 25)
             );
             case ULTIMATE -> List.of(
-                    new SpawnerChoice(EntityType.ENDERMAN, 20),
-                    new SpawnerChoice(EntityType.GHAST, 18),
-                    new SpawnerChoice(EntityType.BLAZE, 15),
-                    new SpawnerChoice(EntityType.IRON_GOLEM, 14),
-                    new SpawnerChoice(EntityType.MUSHROOM_COW, 10),
-                    new SpawnerChoice(EntityType.DOLPHIN, 10),
-                    new SpawnerChoice(EntityType.WARDEN, 5),
-                    new SpawnerChoice(EntityType.GUARDIAN, 8)
+                    new SpawnerChoice(EntityType.CREEPER, 35),
+                    new SpawnerChoice(EntityType.BLAZE, 30),
+                    new SpawnerChoice(EntityType.SLIME, 20),
+                    new SpawnerChoice(EntityType.ZOMBIFIED_PIGLIN, 15)
             );
             case LEGENDARY -> List.of(
-                    new SpawnerChoice(EntityType.GHAST, 18),
-                    new SpawnerChoice(EntityType.IRON_GOLEM, 18),
-                    new SpawnerChoice(EntityType.MUSHROOM_COW, 16),
-                    new SpawnerChoice(EntityType.DOLPHIN, 14),
-                    new SpawnerChoice(EntityType.WARDEN, 10),
-                    new SpawnerChoice(EntityType.ENDERMAN, 10),
-                    new SpawnerChoice(EntityType.GUARDIAN, 8),
-                    new SpawnerChoice(EntityType.BLAZE, 6)
+                    new SpawnerChoice(EntityType.IRON_GOLEM, 30),
+                    new SpawnerChoice(EntityType.WARDEN, 25),
+                    new SpawnerChoice(EntityType.GHAST, 25),
+                    new SpawnerChoice(EntityType.MAGMA_CUBE, 20)
             );
             case GODLY -> List.of(
-                    new SpawnerChoice(EntityType.WARDEN, 18),
-                    new SpawnerChoice(EntityType.IRON_GOLEM, 16),
-                    new SpawnerChoice(EntityType.GHAST, 14),
-                    new SpawnerChoice(EntityType.MUSHROOM_COW, 14),
-                    new SpawnerChoice(EntityType.DOLPHIN, 12),
-                    new SpawnerChoice(EntityType.GUARDIAN, 10),
-                    new SpawnerChoice(EntityType.ENDERMAN, 10),
-                    new SpawnerChoice(EntityType.BLAZE, 6)
+                    new SpawnerChoice(EntityType.IRON_GOLEM, 28),
+                    new SpawnerChoice(EntityType.WARDEN, 28),
+                    new SpawnerChoice(EntityType.GHAST, 24),
+                    new SpawnerChoice(EntityType.MAGMA_CUBE, 20)
             );
         };
     }
