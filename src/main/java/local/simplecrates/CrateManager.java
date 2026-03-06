@@ -208,7 +208,7 @@ public class CrateManager {
         switch (tier) {
             case SIMPLE -> {
                 list.add(weight(45, itemReward(createTieredGKitGear(tier), "§7GKit Gear")));
-                list.add(weight(30, itemReward(new ItemStack(Material.EXPERIENCE_BOTTLE, 16), "§bXP Bottles x16")));
+                list.add(weight(30, itemReward(createXPBottle(randomRange(750, 1500)), "§bCustom XP Bottle")));
                 list.add(weight(15, itemReward(createRankNote("scout", 1), "§aScout Rank Note")));
                 list.add(weight(10, itemReward(createRandomSpawnerByTier(CrateTier.SIMPLE), "§fRandom Simple Spawner")));
             }
@@ -245,7 +245,7 @@ public class CrateManager {
             case GODLY -> {
                 list.add(weight(18, itemReward(createRandomSpawnerByTier(CrateTier.GODLY), "§dRandom Godly Spawner")));
                 list.add(weight(28, itemReward(createGKitGem(), "§dGKit Gem")));
-                list.add(weight(32, itemReward(createTieredGKitGear(CrateTier.LEGENDARY), "§dRandom GKit Gear")));
+                list.add(weight(32, itemReward(createTieredGKitGear(CrateTier.GODLY), "§dRandom GKit Gear")));
                 list.add(weight(12, itemReward(createRankVoucher("sovereign"), "§cSovereign Voucher")));
                 list.add(weight(20, itemReward(createCrateItem(CrateTier.LEGENDARY, 1), "§6Legendary Crate")));
             }
@@ -417,6 +417,21 @@ public class CrateManager {
         return bottle;
     }
 
+    private boolean isGearMaterial(Material material) {
+        if (material == null) return false;
+        String name = material.name();
+        return name.contains("SWORD")
+                || name.contains("HELMET")
+                || name.contains("CHESTPLATE")
+                || name.contains("LEGGINGS")
+                || name.contains("BOOTS")
+                || name.contains("PICKAXE")
+                || name.contains("SHOVEL")
+                || name.contains("AXE")
+                || material == Material.BOW
+                || material == Material.CROSSBOW;
+    }
+
     private ItemStack createGKitGem() {
         if (plugin.getServer().getPluginManager().getPlugin("SimpleKits") instanceof SimpleKitsPlugin kitsPlugin) {
             GKitGemManager gemManager = kitsPlugin.getGKitGemManager();
@@ -439,18 +454,32 @@ public class CrateManager {
     }
 
     private ItemStack createTieredGKitGear(CrateTier tier) {
-        String kitName = "random";
-        String kitDisplay = "§dRandom GKit";
-
         if (plugin.getServer().getPluginManager().getPlugin("SimpleKits") instanceof SimpleKitsPlugin kitsPlugin) {
             List<GKit> all = new ArrayList<>(kitsPlugin.getKitManager().getAllKits());
             if (!all.isEmpty()) {
                 GKit randomKit = all.get(random.nextInt(all.size()));
-                kitName = randomKit.getName().toLowerCase(Locale.ROOT);
-                kitDisplay = randomKit.getDisplayName();
+                List<ItemStack> preview = kitsPlugin.getGKitGemManager().createPreviewSet(randomKit);
+
+                List<ItemStack> gear = new ArrayList<>();
+                for (ItemStack candidate : preview) {
+                    if (candidate == null || candidate.getType() == Material.AIR) continue;
+                    if (isGearMaterial(candidate.getType())) {
+                        gear.add(candidate.clone());
+                    }
+                }
+
+                if (!gear.isEmpty()) {
+                    return gear.get(random.nextInt(gear.size()));
+                }
+
+                if (!preview.isEmpty()) {
+                    return preview.get(random.nextInt(preview.size())).clone();
+                }
             }
         }
 
+        String kitName = "fallback";
+        String kitDisplay = "§dRandom GKit";
         Material[] choices = {
                 Material.DIAMOND_HELMET,
                 Material.DIAMOND_CHESTPLATE,
@@ -648,37 +677,38 @@ public class CrateManager {
     private List<SpawnerChoice> getSpawnerPoolByTier(CrateTier tier) {
         return switch (tier) {
             case SIMPLE -> List.of(
-                    new SpawnerChoice(EntityType.WOLF, 35),
-                    new SpawnerChoice(EntityType.CHICKEN, 35),
-                    new SpawnerChoice(EntityType.SHEEP, 30)
+                new SpawnerChoice(EntityType.CHICKEN, 24),
+                new SpawnerChoice(EntityType.PIG, 22),
+                new SpawnerChoice(EntityType.SHEEP, 20),
+                new SpawnerChoice(EntityType.WOLF, 18),
+                new SpawnerChoice(EntityType.COW, 16)
             );
             case UNIQUE -> List.of(
-                    new SpawnerChoice(EntityType.CAVE_SPIDER, 40),
-                    new SpawnerChoice(EntityType.PIG, 35),
-                    new SpawnerChoice(EntityType.COW, 25)
+                new SpawnerChoice(EntityType.CAVE_SPIDER, 28),
+                new SpawnerChoice(EntityType.SPIDER, 26),
+                new SpawnerChoice(EntityType.ZOMBIE, 24),
+                new SpawnerChoice(EntityType.SKELETON, 22)
             );
             case ELITE -> List.of(
-                    new SpawnerChoice(EntityType.SPIDER, 40),
-                    new SpawnerChoice(EntityType.ZOMBIE, 35),
-                    new SpawnerChoice(EntityType.SKELETON, 25)
+                new SpawnerChoice(EntityType.SLIME, 42),
+                new SpawnerChoice(EntityType.ZOMBIFIED_PIGLIN, 30),
+                new SpawnerChoice(EntityType.BLAZE, 28)
             );
             case ULTIMATE -> List.of(
-                    new SpawnerChoice(EntityType.CREEPER, 35),
-                    new SpawnerChoice(EntityType.BLAZE, 30),
-                    new SpawnerChoice(EntityType.SLIME, 20),
-                    new SpawnerChoice(EntityType.ZOMBIFIED_PIGLIN, 15)
+                new SpawnerChoice(EntityType.CREEPER, 44),
+                new SpawnerChoice(EntityType.BLAZE, 32),
+                new SpawnerChoice(EntityType.MAGMA_CUBE, 24)
             );
             case LEGENDARY -> List.of(
-                    new SpawnerChoice(EntityType.IRON_GOLEM, 30),
-                    new SpawnerChoice(EntityType.WARDEN, 25),
-                    new SpawnerChoice(EntityType.GHAST, 25),
-                    new SpawnerChoice(EntityType.MAGMA_CUBE, 20)
+                new SpawnerChoice(EntityType.GHAST, 34),
+                new SpawnerChoice(EntityType.IRON_GOLEM, 34),
+                    new SpawnerChoice(EntityType.SNOWMAN, 32)
             );
             case GODLY -> List.of(
-                    new SpawnerChoice(EntityType.IRON_GOLEM, 28),
-                    new SpawnerChoice(EntityType.WARDEN, 28),
-                    new SpawnerChoice(EntityType.GHAST, 24),
-                    new SpawnerChoice(EntityType.MAGMA_CUBE, 20)
+                new SpawnerChoice(EntityType.WARDEN, 45),
+                new SpawnerChoice(EntityType.IRON_GOLEM, 25),
+                new SpawnerChoice(EntityType.GHAST, 20),
+                new SpawnerChoice(EntityType.MAGMA_CUBE, 10)
             );
         };
     }
