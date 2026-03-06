@@ -14,3 +14,9 @@ commands:
   rankvoucher:
     description: Give rank vouchers
     usage: /rankvoucher give <player> <rank> [amount]
+    permission: simplecrates.admin
+
+permissions:
+  simplecrates.admin:
+    description: Admin access for crate give and rank vouchers
+    default: op

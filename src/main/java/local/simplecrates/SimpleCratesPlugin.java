@@ -20,9 +20,12 @@ public class SimpleCratesPlugin extends JavaPlugin {
 
         crateManager = new CrateManager(this, economy);
         CrateAnimationListener animationListener = new CrateAnimationListener(this, crateManager);
+        SimpleCratesTabCompleter tabCompleter = new SimpleCratesTabCompleter(crateManager);
 
         getCommand("crate").setExecutor(new CrateCommand(crateManager, animationListener));
+        getCommand("crate").setTabCompleter(tabCompleter);
         getCommand("rankvoucher").setExecutor(new RankVoucherCommand(crateManager));
+        getCommand("rankvoucher").setTabCompleter(tabCompleter);
         Bukkit.getPluginManager().registerEvents(animationListener, this);
         Bukkit.getPluginManager().registerEvents(new CrateListener(crateManager, animationListener), this);
 
