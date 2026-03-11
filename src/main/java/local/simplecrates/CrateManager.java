@@ -211,12 +211,16 @@ public class CrateManager {
                 list.add(weight(30, itemReward(createXPBottle(randomRange(750, 1500)), "§bCustom XP Bottle")));
                 list.add(weight(15, itemReward(createRankNote("scout", 1), "§aScout Rank Note")));
                 list.add(weight(10, itemReward(createRandomSpawnerByTier(CrateTier.SIMPLE), "§fRandom Simple Spawner")));
+                // FactionEnchants items for Simple crate
+                list.add(weight(8, itemReward(feRandScroll(tier), "§eUltimate Randomization Scroll")));
             }
             case UNIQUE -> {
                 list.add(weight(35, itemReward(createTieredGKitGear(tier), "§aGKit Gear")));
                 list.add(weight(35, itemReward(createRandomSpawnerByTier(CrateTier.UNIQUE), "§aRandom Unique Spawner")));
                 list.add(weight(15, itemReward(createRankVoucher("militant"), "§eMilitant Rank Voucher")));
                 list.add(weight(15, itemReward(createXPBottle(1500), "§bXP Bottle 1500")));
+                // FactionEnchants items for Unique crate
+                list.add(weight(8, itemReward(feRandScroll(tier), "§6Legendary Randomization Scroll")));
             }
             case ELITE -> {
                 list.add(weight(25, itemReward(createTieredGKitGear(tier), "§bGKit Gear")));
@@ -225,6 +229,13 @@ public class CrateManager {
                 list.add(weight(15, itemReward(createTieredGKitGear(tier), "§dRandom GKit Gear")));
                 list.add(weight(15, itemReward(createRankVoucher("tactician"), "§6Tactician Voucher")));
                 list.add(weight(20, itemReward(createCrateItem(CrateTier.UNIQUE, 1), "§aUnique Crate")));
+                // FactionEnchants items for Elite+ crates
+                list.add(weight(10, itemReward(feRandScroll(tier), "§cGodly Randomization Scroll")));
+                list.add(weight(8,  itemReward(feWeaponOrb(tier), "§5Weapon Enchantment Orb")));
+                list.add(weight(8,  itemReward(feArmorOrb(tier),  "§5Armor Enchantment Orb")));
+                list.add(weight(7,  itemReward(feWhiteScroll(),   "§fWhite Scroll")));
+                list.add(weight(6,  itemReward(feNameTag(),       "§6Name Tag")));
+                list.add(weight(6,  itemReward(feSoulGem(),       "§dRandom Soul Gem")));
             }
             case ULTIMATE -> {
                 list.add(weight(25, itemReward(createTieredGKitGear(tier), "§5GKit Gear")));
@@ -233,6 +244,13 @@ public class CrateManager {
                 list.add(weight(18, itemReward(createTieredGKitGear(tier), "§dRandom GKit Gear")));
                 list.add(weight(20, itemReward(createRankVoucher("warlord"), "§5Warlord Voucher")));
                 list.add(weight(15, itemReward(createCrateItem(CrateTier.ELITE, 1), "§bElite Crate")));
+                // FactionEnchants items for Ultimate+ crates
+                list.add(weight(10, itemReward(feRandScroll(tier), "§cGodly Randomization Scroll")));
+                list.add(weight(10, itemReward(feWeaponOrb(tier), "§5Weapon Enchantment Orb")));
+                list.add(weight(10, itemReward(feArmorOrb(tier),  "§5Armor Enchantment Orb")));
+                list.add(weight(8,  itemReward(feWhiteScroll(),   "§fWhite Scroll")));
+                list.add(weight(6,  itemReward(feNameTag(),       "§6Name Tag")));
+                list.add(weight(6,  itemReward(feSoulGem(),       "§dRandom Soul Gem")));
             }
             case LEGENDARY -> {
                 list.add(weight(28, itemReward(createTieredGKitGear(tier), "§6GKit Gear")));
@@ -241,6 +259,13 @@ public class CrateManager {
                 list.add(weight(20, itemReward(createTieredGKitGear(tier), "§dRandom GKit Gear")));
                 list.add(weight(15, itemReward(createRankVoucher("sovereign"), "§cSovereign Voucher")));
                 list.add(weight(20, itemReward(createCrateItem(CrateTier.ULTIMATE, 1), "§5Ultimate Crate")));
+                // FactionEnchants items for Legendary+ crates
+                list.add(weight(10, itemReward(feRandScroll(tier), "§cGodly Randomization Scroll")));
+                list.add(weight(12, itemReward(feWeaponOrb(tier), "§5Weapon Enchantment Orb")));
+                list.add(weight(12, itemReward(feArmorOrb(tier),  "§5Armor Enchantment Orb")));
+                list.add(weight(10, itemReward(feWhiteScroll(),   "§fWhite Scroll")));
+                list.add(weight(7,  itemReward(feNameTag(),       "§6Name Tag")));
+                list.add(weight(7,  itemReward(feSoulGem(),       "§dRandom Soul Gem")));
             }
             case GODLY -> {
                 list.add(weight(18, itemReward(createRandomSpawnerByTier(CrateTier.GODLY), "§dRandom Godly Spawner")));
@@ -248,6 +273,13 @@ public class CrateManager {
                 list.add(weight(32, itemReward(createTieredGKitGear(CrateTier.GODLY), "§dRandom GKit Gear")));
                 list.add(weight(12, itemReward(createRankVoucher("sovereign"), "§cSovereign Voucher")));
                 list.add(weight(20, itemReward(createCrateItem(CrateTier.LEGENDARY, 1), "§6Legendary Crate")));
+                // FactionEnchants items for Godly crate (best tier)
+                list.add(weight(10, itemReward(feRandScroll(tier), "§cGodly Randomization Scroll")));
+                list.add(weight(15, itemReward(feWeaponOrb(tier), "§5Weapon Enchantment Orb")));
+                list.add(weight(15, itemReward(feArmorOrb(tier),  "§5Armor Enchantment Orb")));
+                list.add(weight(12, itemReward(feWhiteScroll(),   "§fWhite Scroll")));
+                list.add(weight(8,  itemReward(feNameTag(),       "§6Name Tag")));
+                list.add(weight(8,  itemReward(feSoulGem(),       "§dRandom Soul Gem")));
             }
         }
 
@@ -837,4 +869,62 @@ public class CrateManager {
     }
 
     public record RewardDraw(ItemStack preview, String displayName, Consumer<Player> grant) {}
+
+    // ── FactionEnchants integration ────────────────────────────────────────────
+
+    private com.factionenchants.FactionEnchantsPlugin getFactionEnchants() {
+        org.bukkit.plugin.Plugin fe = plugin.getServer().getPluginManager().getPlugin("FactionEnchants");
+        return fe instanceof com.factionenchants.FactionEnchantsPlugin fep ? fep : null;
+    }
+
+    /** Randomization scroll matching the crate tier:
+     *  SIMPLE/UNIQUE → Ultimate, ELITE/ULTIMATE → Legendary, LEGENDARY/GODLY → Godly. */
+    private ItemStack feRandScroll(CrateTier tier) {
+        com.factionenchants.FactionEnchantsPlugin fe = getFactionEnchants();
+        if (fe == null) return new ItemStack(Material.PAPER);
+        return switch (tier) {
+            case SIMPLE, UNIQUE                  -> com.factionenchants.items.RandomizationScrollItem.createUltimate(fe);
+            case ELITE, ULTIMATE                 -> com.factionenchants.items.RandomizationScrollItem.createLegendary(fe);
+            case LEGENDARY, GODLY                -> com.factionenchants.items.RandomizationScrollItem.createGodly(fe);
+        };
+    }
+
+    /** Weapon Enchantment Orb: ELITE=[10], ULTIMATE=[10–11], LEGENDARY/GODLY=[10–12]. */
+    private ItemStack feWeaponOrb(CrateTier tier) {
+        com.factionenchants.FactionEnchantsPlugin fe = getFactionEnchants();
+        if (fe == null) return new ItemStack(Material.NETHER_STAR);
+        int slots = switch (tier) {
+            case ELITE      -> 10;
+            case ULTIMATE   -> 10 + random.nextInt(2);   // 10 or 11
+            default         -> 10 + random.nextInt(3);   // 10, 11, or 12
+        };
+        return com.factionenchants.items.EnchantmentOrbItem.createWeaponOrb(fe, slots);
+    }
+
+    /** Armor Enchantment Orb: ELITE=[10], ULTIMATE=[10–11], LEGENDARY/GODLY=[10–12]. */
+    private ItemStack feArmorOrb(CrateTier tier) {
+        com.factionenchants.FactionEnchantsPlugin fe = getFactionEnchants();
+        if (fe == null) return new ItemStack(Material.NETHER_STAR);
+        int slots = switch (tier) {
+            case ELITE      -> 10;
+            case ULTIMATE   -> 10 + random.nextInt(2);
+            default         -> 10 + random.nextInt(3);
+        };
+        return com.factionenchants.items.EnchantmentOrbItem.createArmorOrb(fe, slots);
+    }
+
+    private ItemStack feWhiteScroll() {
+        com.factionenchants.FactionEnchantsPlugin fe = getFactionEnchants();
+        return fe != null ? com.factionenchants.items.WhiteScrollItem.create(fe) : new ItemStack(Material.MAP);
+    }
+
+    private ItemStack feNameTag() {
+        com.factionenchants.FactionEnchantsPlugin fe = getFactionEnchants();
+        return fe != null ? com.factionenchants.items.NameTagItem.create(fe) : new ItemStack(Material.NAME_TAG);
+    }
+
+    private ItemStack feSoulGem() {
+        com.factionenchants.FactionEnchantsPlugin fe = getFactionEnchants();
+        return fe != null ? com.factionenchants.items.SoulGemItem.createGenerator(fe) : new ItemStack(Material.EMERALD);
+    }
 }

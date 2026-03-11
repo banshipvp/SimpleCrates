@@ -17,6 +17,7 @@ dependencies {
     compileOnly 'com.github.MilkBowl:VaultAPI:1.7.1'
     compileOnly files('../SimpleKits/build/libs/SimpleKits-1.0.jar')
     compileOnly files('../SimpleEconomy/build/libs/SimpleEconomy-1.0.jar')
+    compileOnly files('../faction-enchants-plugin/target/faction-enchants-plugin-1.0-SNAPSHOT.jar')
 }
 
 java {
