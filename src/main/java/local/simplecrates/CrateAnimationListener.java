@@ -84,6 +84,17 @@ public class CrateAnimationListener implements Listener {
                             openPickGui(player, s);
                             cancel();
                         }
+                    } else if (s.stage == Stage.ROLLING) {
+                        // Add a timeout for rolling to prevent infinite waiting on cyan glass panes
+                        ticksPassed += 4;
+                        if (ticksPassed >= 200) { // 10 seconds timeout
+                            plugin.getLogger().warning("Crate rolling timeout for player " + player.getName());
+                            sessions.remove(uid);
+                            player.closeInventory();
+                            player.sendMessage("§cCrate opening timeout. Your crate has been refunded.");
+                            player.getInventory().addItem(crateManager.createCrateItem(tier, 1));
+                            cancel();
+                        }
                     }
                 }
             }.runTaskTimer(plugin, 0L, 4L);
