@@ -212,7 +212,14 @@ public class CrateManager {
                 list.add(weight(15, itemReward(createRankNote("scout", 1), "§aScout Rank Note")));
                 list.add(weight(10, itemReward(createRandomSpawnerByTier(CrateTier.SIMPLE), "§fRandom Simple Spawner")));
                 // FactionEnchants items for Simple crate
-                list.add(weight(8, itemReward(feRandScroll(tier), "§eUltimate Randomization Scroll")));
+                list.add(weight(8,  itemReward(feRandScroll(tier), "§eUltimate Randomization Scroll")));
+                list.add(weight(12, itemReward(feVanillaBlackScroll(), "§8Vanilla Black Scroll")));
+                list.add(weight(10, itemReward(feRandomBook(tier), "§fSimple Enchant Book")));
+                list.add(weight(15, itemReward(feMysteryDust(tier), "§7Mystery Dust")));
+                list.add(weight(20, itemReward(feCustomTnt(16), "§cTNT Bundle")));
+                list.add(weight(8,  itemReward(feCreeperEgg(), "§aCreeper Spawn Egg")));
+                list.add(weight(5,  itemReward(feMysterySpawner(), "§dMystery Spawner")));
+                list.add(weight(12, itemReward(feBankNote(5_000, 25_000), "§6Bank Note")));
             }
             case UNIQUE -> {
                 list.add(weight(35, itemReward(createTieredGKitGear(tier), "§aGKit Gear")));
@@ -220,7 +227,15 @@ public class CrateManager {
                 list.add(weight(15, itemReward(createRankVoucher("militant"), "§eMilitant Rank Voucher")));
                 list.add(weight(15, itemReward(createXPBottle(1500), "§bXP Bottle 1500")));
                 // FactionEnchants items for Unique crate
-                list.add(weight(8, itemReward(feRandScroll(tier), "§6Legendary Randomization Scroll")));
+                list.add(weight(8,  itemReward(feRandScroll(tier), "§6Legendary Randomization Scroll")));
+                list.add(weight(12, itemReward(feVanillaBlackScroll(), "§8Vanilla Black Scroll")));
+                list.add(weight(10, itemReward(feRandomBook(tier), "§fUnique Enchant Book")));
+                list.add(weight(15, itemReward(feMysteryDust(tier), "§7Mystery Dust")));
+                list.add(weight(8,  itemReward(feTransmogScroll(), "§5Transmog Scroll")));
+                list.add(weight(15, itemReward(feCustomTnt(32), "§cTNT Bundle")));
+                list.add(weight(10, itemReward(feCreeperEgg(), "§aCreeper Spawn Egg")));
+                list.add(weight(8,  itemReward(feMysterySpawner(), "§dMystery Spawner")));
+                list.add(weight(12, itemReward(feBankNote(10_000, 50_000), "§6Bank Note")));
             }
             case ELITE -> {
                 list.add(weight(25, itemReward(createTieredGKitGear(tier), "§bGKit Gear")));
@@ -236,6 +251,14 @@ public class CrateManager {
                 list.add(weight(7,  itemReward(feWhiteScroll(),   "§fWhite Scroll")));
                 list.add(weight(6,  itemReward(feNameTag(),       "§6Name Tag")));
                 list.add(weight(6,  itemReward(feSoulGem(),       "§dRandom Soul Gem")));
+                list.add(weight(12, itemReward(feHeroicBlackScroll(), "§8Heroic Black Scroll")));
+                list.add(weight(10, itemReward(feRandomBook(tier), "§bElite Enchant Book")));
+                list.add(weight(12, itemReward(feMysteryDust(tier), "§7Mystery Dust")));
+                list.add(weight(10, itemReward(feTransmogScroll(), "§5Transmog Scroll")));
+                list.add(weight(6,  itemReward(feTntWand(), "§cTNT Wand")));
+                list.add(weight(6,  itemReward(feSellWand(), "§6Sell Wand")));
+                list.add(weight(8,  itemReward(feCollectionChest(), "§aCollection Chest")));
+                list.add(weight(10, itemReward(feBankNote(25_000, 100_000), "§6Bank Note")));
             }
             case ULTIMATE -> {
                 list.add(weight(25, itemReward(createTieredGKitGear(tier), "§5GKit Gear")));
@@ -251,6 +274,15 @@ public class CrateManager {
                 list.add(weight(8,  itemReward(feWhiteScroll(),   "§fWhite Scroll")));
                 list.add(weight(6,  itemReward(feNameTag(),       "§6Name Tag")));
                 list.add(weight(6,  itemReward(feSoulGem(),       "§dRandom Soul Gem")));
+                list.add(weight(10, itemReward(feHeroicBlackScroll(), "§8Heroic Black Scroll")));
+                list.add(weight(10, itemReward(feRandomBook(tier), "§eUltimate Enchant Book")));
+                list.add(weight(12, itemReward(feMysteryDust(tier), "§7Mystery Dust")));
+                list.add(weight(12, itemReward(feTransmogScroll(), "§5Transmog Scroll")));
+                list.add(weight(8,  itemReward(feTntWand(), "§cTNT Wand")));
+                list.add(weight(8,  itemReward(feSellWand(), "§6Sell Wand")));
+                list.add(weight(10, itemReward(feCollectionChest(), "§aCollection Chest")));
+                list.add(weight(10, itemReward(feBankNote(50_000, 200_000), "§6Bank Note")));
+                list.add(weight(5,  itemReward(feFallenHeroBone(), "§cFallen Hero Bone")));
             }
             case LEGENDARY -> {
                 list.add(weight(28, itemReward(createTieredGKitGear(tier), "§6GKit Gear")));
@@ -266,6 +298,15 @@ public class CrateManager {
                 list.add(weight(10, itemReward(feWhiteScroll(),   "§fWhite Scroll")));
                 list.add(weight(7,  itemReward(feNameTag(),       "§6Name Tag")));
                 list.add(weight(7,  itemReward(feSoulGem(),       "§dRandom Soul Gem")));
+                list.add(weight(10, itemReward(feHeroicBlackScroll(), "§8Heroic Black Scroll")));
+                list.add(weight(10, itemReward(feRandomBook(tier), "§6Legendary Enchant Book")));
+                list.add(weight(12, itemReward(feMysteryDust(tier), "§7Mystery Dust")));
+                list.add(weight(12, itemReward(feTransmogScroll(), "§5Transmog Scroll")));
+                list.add(weight(10, itemReward(feTntWand(), "§cTNT Wand")));
+                list.add(weight(10, itemReward(feSellWand(), "§6Sell Wand")));
+                list.add(weight(12, itemReward(feCollectionChest(), "§aCollection Chest")));
+                list.add(weight(10, itemReward(feBankNote(100_000, 500_000), "§6Bank Note")));
+                list.add(weight(8,  itemReward(feFallenHeroBone(), "§cFallen Hero Bone")));
             }
             case GODLY -> {
                 list.add(weight(18, itemReward(createRandomSpawnerByTier(CrateTier.GODLY), "§dRandom Godly Spawner")));
@@ -280,6 +321,15 @@ public class CrateManager {
                 list.add(weight(12, itemReward(feWhiteScroll(),   "§fWhite Scroll")));
                 list.add(weight(8,  itemReward(feNameTag(),       "§6Name Tag")));
                 list.add(weight(8,  itemReward(feSoulGem(),       "§dRandom Soul Gem")));
+                list.add(weight(8,  itemReward(feHeroicBlackScroll(), "§8Heroic Black Scroll")));
+                list.add(weight(10, itemReward(feRandomBook(tier), "§cSoul Enchant Book")));
+                list.add(weight(10, itemReward(feMysteryDust(tier), "§7Mystery Dust")));
+                list.add(weight(15, itemReward(feGodlyTransmogScroll(), "§cGodly Transmog Scroll")));
+                list.add(weight(12, itemReward(feTntWand(), "§cTNT Wand")));
+                list.add(weight(12, itemReward(feSellWand(), "§6Sell Wand")));
+                list.add(weight(15, itemReward(feCollectionChest(), "§aCollection Chest")));
+                list.add(weight(10, itemReward(feBankNote(200_000, 1_000_000), "§6Bank Note")));
+                list.add(weight(12, itemReward(feFallenHeroBone(), "§cFallen Hero Bone")));
             }
         }
 
@@ -926,5 +976,154 @@ public class CrateManager {
     private ItemStack feSoulGem() {
         com.factionenchants.FactionEnchantsPlugin fe = getFactionEnchants();
         return fe != null ? com.factionenchants.items.SoulGemItem.createGenerator(fe) : new ItemStack(Material.EMERALD);
+    }
+
+    private ItemStack feTransmogScroll() {
+        com.factionenchants.FactionEnchantsPlugin fe = getFactionEnchants();
+        return fe != null ? com.factionenchants.items.TransmogScrollItem.create(fe) : new ItemStack(Material.PAPER);
+    }
+
+    private ItemStack feGodlyTransmogScroll() {
+        com.factionenchants.FactionEnchantsPlugin fe = getFactionEnchants();
+        return fe != null ? com.factionenchants.items.GodlyTransmogScrollItem.create(fe) : new ItemStack(Material.PAPER);
+    }
+
+    private ItemStack feHeroicBlackScroll() {
+        com.factionenchants.FactionEnchantsPlugin fe = getFactionEnchants();
+        return fe != null ? com.factionenchants.items.HeroicBlackScrollItem.create(fe) : new ItemStack(Material.INK_SAC);
+    }
+
+    private ItemStack feVanillaBlackScroll() {
+        com.factionenchants.FactionEnchantsPlugin fe = getFactionEnchants();
+        return fe != null ? com.factionenchants.items.VanillaBlackScrollItem.create(fe) : new ItemStack(Material.INK_SAC);
+    }
+
+    private ItemStack feRandomBook(CrateTier tier) {
+        com.factionenchants.FactionEnchantsPlugin fe = getFactionEnchants();
+        if (fe == null) return new ItemStack(Material.ENCHANTED_BOOK);
+        com.factionenchants.enchantments.CustomEnchantment.EnchantTier enchantTier = toEnchantTier(tier);
+        return com.factionenchants.books.EnchantBook.createRandomBook(enchantTier);
+    }
+
+    private ItemStack feMysteryDust(CrateTier tier) {
+        com.factionenchants.FactionEnchantsPlugin fe = getFactionEnchants();
+        if (fe == null) return new ItemStack(Material.GLOWSTONE_DUST);
+        com.factionenchants.enchantments.CustomEnchantment.EnchantTier enchantTier = toEnchantTier(tier);
+        return fe.getDustManager().createEnvoyDustToken(enchantTier);
+    }
+
+    private com.factionenchants.enchantments.CustomEnchantment.EnchantTier toEnchantTier(CrateTier tier) {
+        return switch (tier) {
+            case SIMPLE    -> com.factionenchants.enchantments.CustomEnchantment.EnchantTier.SIMPLE;
+            case UNIQUE    -> com.factionenchants.enchantments.CustomEnchantment.EnchantTier.UNIQUE;
+            case ELITE     -> com.factionenchants.enchantments.CustomEnchantment.EnchantTier.ELITE;
+            case ULTIMATE  -> com.factionenchants.enchantments.CustomEnchantment.EnchantTier.ULTIMATE;
+            case LEGENDARY -> com.factionenchants.enchantments.CustomEnchantment.EnchantTier.LEGENDARY;
+            case GODLY     -> com.factionenchants.enchantments.CustomEnchantment.EnchantTier.SOUL;
+        };
+    }
+
+    private ItemStack feTntWand() {
+        ItemStack item = new ItemStack(Material.STICK);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName("§c§lTNT Wand");
+        meta.setLore(List.of(
+            "§7Right-click to place §cTNT§7.",
+            "§8simplefactions:tnt_wand"
+        ));
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    private ItemStack feSellWand() {
+        ItemStack item = new ItemStack(Material.BLAZE_ROD);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName("§6§lSell Wand");
+        meta.setLore(List.of(
+            "§7Right-click a chest to sell its contents.",
+            "§8simplefactions:sell_wand"
+        ));
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    private ItemStack feCollectionChest() {
+        ItemStack item = new ItemStack(Material.CHEST);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName("§a§lCollection Chest");
+        meta.setLore(List.of(
+            "§7Place down to collect mob drops",
+            "§7automatically from nearby spawners.",
+            "§8simplefactions:collection_chest"
+        ));
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    private ItemStack feCustomTnt(int count) {
+        ItemStack tnt = new ItemStack(Material.TNT, count);
+        ItemMeta meta = tnt.getItemMeta();
+        meta.setDisplayName("§c§lTNT Bundle §7(x" + count + ")");
+        tnt.setItemMeta(meta);
+        return tnt;
+    }
+
+    private ItemStack feCreeperEgg() {
+        ItemStack item = new ItemStack(Material.CREEPER_SPAWN_EGG);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName("§a§lCustom Creeper Egg");
+        meta.setLore(List.of("§7Use to spawn a §aCreeper§7."));
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    private ItemStack feMysterySpawner() {
+        ItemStack spawner = new ItemStack(Material.SPAWNER);
+        ItemMeta meta = spawner.getItemMeta();
+        if (meta instanceof org.bukkit.inventory.meta.BlockStateMeta blockMeta) {
+            blockMeta.setDisplayName("§d§lMystery Spawner");
+            blockMeta.setLore(List.of(
+                "§7Place to reveal the mystery mob.",
+                "§7Spawns a §drare§7 entity!"
+            ));
+            blockMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            spawner.setItemMeta(blockMeta);
+        }
+        return spawner;
+    }
+
+    private ItemStack feFallenHeroBone() {
+        com.factionenchants.FactionEnchantsPlugin fe = getFactionEnchants();
+        if (fe == null) return new ItemStack(Material.BONE);
+
+        // Pick a random kit name from SimpleKits if available
+        String kitName = "warrior";
+        if (plugin.getServer().getPluginManager().getPlugin("SimpleKits") instanceof local.simplekits.SimpleKitsPlugin kitsPlugin) {
+            List<local.simplekits.GKit> allKits = new ArrayList<>(kitsPlugin.getKitManager().getAllKits());
+            if (!allKits.isEmpty()) {
+                kitName = allKits.get(random.nextInt(allKits.size())).getName();
+            }
+        }
+        return com.factionenchants.items.FallenHeroItem.createBone(fe, kitName);
+    }
+
+    private ItemStack feBankNote(double minAmount, double maxAmount) {
+        double amount = minAmount + random.nextDouble() * (maxAmount - minAmount);
+        amount = Math.round(amount / 100.0) * 100.0; // round to nearest 100
+
+        if (plugin.getServer().getPluginManager().getPlugin("SimpleEconomy") instanceof local.simpleeconomy.SimpleEconomyPlugin eco) {
+            local.simpleeconomy.BankNoteManager bnm = eco.getBankNoteManager();
+            if (bnm != null) return bnm.createBankNote(amount);
+        }
+
+        // Fallback: plain paper with label
+        ItemStack fallback = new ItemStack(Material.PAPER);
+        ItemMeta meta = fallback.getItemMeta();
+        meta.setDisplayName("§6§lBank Note §7- $" + format((int) amount));
+        fallback.setItemMeta(meta);
+        return fallback;
     }
 }
